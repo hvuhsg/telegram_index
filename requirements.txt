@@ -2,3 +2,4 @@ fastapi
 pyrogram
 python-telegram-bot
 uvicorn
+qwhale_client
