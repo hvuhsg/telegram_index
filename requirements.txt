@@ -1,0 +1,3 @@
+fastapi
+pyrogram
+python-telegram-bot
