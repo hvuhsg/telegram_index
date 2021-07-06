@@ -11,18 +11,6 @@ userbot.start()
 worker = Worker(userbot)
 
 add_links = [
-    "https://t.me/designers",
-    "https://t.me/amirmoyal",
-    "https://t.me/TrendingStickers",
-    "https://t.me/MugavriExits",
-    "https://t.me/news_kodkodgroup",
-    "https://t.me/geektimecoil",
-    "https://t.me/abualiexpress",
-    "https://t.me/NeWSnOw247",
-    "https://t.me/New_security8200",
-    "https://t.me/YaronTeam",
-    "https://t.me/ynetalerts",
-    "https://t.me/HaaretzPremium",
 ]
 
 while True:

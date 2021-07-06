@@ -7,15 +7,13 @@ from client import submit_user_action, get_suggestions_by_user_id, load_saved_po
 
 
 def post_to_text(post: dict):
-    text = f"Name: {post['name']}\n"
+    text = post['name'] + "\n"
     text += f"-" * 100 + "\n"
-    text += f"Description:\n{post['description'] if len(str(post['description'])) < 100 else post['description'][:97]+'...'}\n"
+    text += f"👥 {post['subscribers']}\n"
     text += f"-" * 100 + "\n"
-    text += f"Subscribers 👥 : {post['subscribers']}\n"
+    text += f"💬️{post['messages']}\n"
     text += f"-" * 100 + "\n"
-    text += f"Messages ✍️: {post['messages']}\n"
-    text += f"-" * 100 + "\n"
-    text += f"URL: {post['url']}"
+    text += post['url']
     return text
 
 
