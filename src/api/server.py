@@ -1,8 +1,7 @@
-from typing import Union
 from fastapi import FastAPI
 
-from .objects import Channel
-from .db import DB
+from objects import Channel
+from db import DB
 
 app = FastAPI(title="TelegramIndex")
 

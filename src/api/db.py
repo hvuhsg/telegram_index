@@ -1,7 +1,11 @@
+import os
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 
 from qwhale_client import APIClient
 from pymongo import DESCENDING
+
+load_dotenv(".env")
 
 
 class DB:
@@ -14,7 +18,7 @@ class DB:
         return cls._instance
 
     def __init__(self):
-        self.__client = APIClient(token="bd929064a9aa4694394c33ac48400a04:d4a6d7f71deab8b49ba059c8a2a45963")
+        self.__client = APIClient(token=os.getenv("QWHALE_TOKEN"))
         self.__db = self.__client.get_database()
         self.__client.activate_database()
 

@@ -3,3 +3,4 @@ pyrogram
 python-telegram-bot
 uvicorn
 qwhale_client
+python-dotenv
