@@ -1,11 +1,12 @@
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, InlineQueryHandler
+from telegram.ext import PicklePersistence
 
 from handlers import on_start, on_help, on_inline_button, on_inline_query
 
 
 class SuggestionsBot:
     def __init__(self, bot_token):
-        self.updater = Updater(bot_token, workers=2)
+        self.updater = Updater(bot_token, workers=2, persistence=PicklePersistence(filename="./cache.db"))
         self.dispatcher = self.updater.dispatcher
         self.create_handlers()
         print("Bot started")
