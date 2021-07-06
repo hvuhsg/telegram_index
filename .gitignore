@@ -103,8 +103,8 @@ celerybeat.pid
 
 # Environments
 src/crawler/config.ini
-*session
-*session-journal
+src/crawler/*session
+src/crawler/*session-journal
 .env
 .venv
 env/
