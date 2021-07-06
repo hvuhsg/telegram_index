@@ -1,5 +1,6 @@
-import requests
+import time
 
+import requests
 from pyrogram import Client
 
 from worker import Worker
@@ -42,3 +43,6 @@ while True:
     if response.status_code >= 300:
         print(response.reason)
         break
+
+    # Flood prevention
+    time.sleep(60)
