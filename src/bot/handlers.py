@@ -11,7 +11,7 @@ def post_to_text(post: dict):
     text += f"-" * 100 + "\n"
     text += f"👥 {post['subscribers']}\n"
     text += f"-" * 100 + "\n"
-    text += f"💬️{post['messages']}\n"
+    text += f"💬️ {post['messages']}\n"
     text += f"-" * 100 + "\n"
     text += post['url']
     return text
