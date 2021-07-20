@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
 from telegram.ext import CallbackContext
 
@@ -24,6 +26,14 @@ def load_user_saved_posts(uid: int, context: CallbackContext):
     posts_dict = {str(post['id']): post for post in posts}
     context.bot_data["posts"].update(posts_dict)
     context.user_data["saved"].update(posts_dict)
+
+
+def bump_to_the_top(update: Update, context: CallbackContext):
+    try:
+        bump_message = update.callback_query.message.reply_text(".")
+        bump_message.delete()
+    except Exception as EX:
+        print("Bump error:", EX)
 
 
 def update_post(update: Update, context: CallbackContext):
@@ -66,16 +76,23 @@ def on_help(update: Update, context: CallbackContext):
 
 def on_inline_button(update: Update, context: CallbackContext):
     button_id = update.callback_query.data
-    print(button_id)
+
+    last_interaction_date = context.user_data.get("last_interaction")
+    if not last_interaction_date and datetime.utcnow() - last_interaction_date > timedelta(hours=1):
+        bump_to_the_top(update, context)
+    context.user_data["last_interaction"] = datetime.utcnow()
+
+    post_id = button_id[button_id.find("-") + 1:]
+    post_name = context.bot_data["posts"][post_id].get("username")
     if button_id.startswith("V"):
-        post_id = button_id[button_id.find("-") + 1:]
+        print("V on", post_name)
         update_post(update, context)
         update.callback_query.answer("Saved! ✅")
         context.user_data["saved"][post_id] = context.bot_data["posts"][post_id]
         submit_user_action(update.effective_user.id, post_id=post_id, saved=True)
 
     elif button_id.startswith("X"):
-        post_id = button_id[button_id.find("-")+1:]
+        print("X on", post_name)
         if update.callback_query.message is not None:
             update_post(update, context)
         update.callback_query.answer("Discarded! ❌")
