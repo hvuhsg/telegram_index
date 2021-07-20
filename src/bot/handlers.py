@@ -78,7 +78,7 @@ def on_inline_button(update: Update, context: CallbackContext):
     button_id = update.callback_query.data
 
     last_interaction_date = context.user_data.get("last_interaction")
-    if not last_interaction_date and datetime.utcnow() - last_interaction_date > timedelta(hours=1):
+    if last_interaction_date and datetime.utcnow() - last_interaction_date > timedelta(hours=1):
         bump_to_the_top(update, context)
     context.user_data["last_interaction"] = datetime.utcnow()
 
