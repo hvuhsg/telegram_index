@@ -83,7 +83,7 @@ def on_inline_button(update: Update, context: CallbackContext):
     context.user_data["last_interaction"] = datetime.utcnow()
 
     post_id = button_id[button_id.find("-") + 1:]
-    post_name = context.bot_data["posts"][post_id].get("username")
+    post_name = context.bot_data["posts"][post_id].get("name")
     if button_id.startswith("V"):
         print("V on", post_name)
         update_post(update, context)
