@@ -29,11 +29,14 @@ def load_user_saved_posts(uid: int, context: CallbackContext):
 
 
 def bump_to_the_top(update: Update, context: CallbackContext):
-    try:
-        bump_message = update.callback_query.message.reply_text(".")
-        bump_message.delete()
-    except Exception as EX:
-        print("Bump error:", EX)
+    last_interaction_date = context.user_data.get("last_interaction")
+    if last_interaction_date and datetime.utcnow() - last_interaction_date > timedelta(hours=1):
+        try:
+            bump_message = update.callback_query.message.reply_text(".")
+            bump_message.delete()
+        except Exception as EX:
+            print("Bump error:", EX)
+    context.user_data["last_interaction"] = datetime.utcnow()
 
 
 def update_post(update: Update, context: CallbackContext):
@@ -76,12 +79,7 @@ def on_help(update: Update, context: CallbackContext):
 
 def on_inline_button(update: Update, context: CallbackContext):
     button_id = update.callback_query.data
-
-    last_interaction_date = context.user_data.get("last_interaction")
-    if last_interaction_date and datetime.utcnow() - last_interaction_date > timedelta(hours=1):
-        bump_to_the_top(update, context)
-    context.user_data["last_interaction"] = datetime.utcnow()
-
+    bump_to_the_top(update, context)
     post_id = button_id[button_id.find("-") + 1:]
     post_name = context.bot_data["posts"][post_id].get("name")
     if button_id.startswith("V"):
