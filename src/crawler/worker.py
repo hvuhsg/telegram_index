@@ -1,5 +1,8 @@
 from pyrogram import Client
 from pyrogram.types import Chat, Message
+from pyrogram.raw.types import InputChannel
+from pyrogram.raw.base.messages import ChatFull
+from pyrogram.raw.functions.channels.get_full_channel import GetFullChannel
 from pyrogram.errors import BadRequest
 
 EMA_SMOOTH_FACTOR = 0.5
@@ -128,6 +131,9 @@ class Worker:
             return "", []
         if chat.type != "channel" or chat.is_restricted:
             return chat.type, []
+        full_channel: ChatFull = self.userbot.send(data=GetFullChannel(channel=InputChannel(channel_id=chat.id)))
+        print(full_channel.full_chat)
+
         channel_info = {"url": channel_url, "name": chat.title, "id": chat.id, "description": chat["description"],
                         "username": chat["username"], "is_verified": chat["is_verified"],
                         "is_restricted": chat["is_restricted"], "is_creator": chat["is_creator"],
