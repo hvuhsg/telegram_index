@@ -132,9 +132,9 @@ class Worker:
             return "", []
         if chat.type != "channel" or chat.is_restricted:
             return chat.type, []
-        print(int(chat.id))
+        chat_id = int(str(chat.id)[4:])
         full_channel: ChatFull = self.userbot.send(
-            data=GetFullChat(chat_id=chat.id)
+            data=GetFullChat(chat_id=chat_id)
         )
         print(full_channel.full_chat)
 
